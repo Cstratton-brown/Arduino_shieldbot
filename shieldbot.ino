@@ -65,7 +65,7 @@ void leftWheel(){
 void checkLeft()
   //checks if the left wheel is rotating slower than the right
 {
-  constrain(leftSpeed,10, 150);
+  constrain(leftSpeed,10, 127);
   if (((countL >=3) && (countR >= 3))&& (countL < countR))
   {
     leftSpeed++;
@@ -86,7 +86,7 @@ void checkLeft()
 void checkRight()
   //checks if the right wheel is rotating slower than the right
 {
-  constrain(rightSpeed,10, 150);
+  constrain(rightSpeed,10, 127);
    if (((countL >=3) && (countR >= 3))&&(countL > countR))
     {
      rightSpeed++;
