@@ -2,8 +2,8 @@
 
 Shieldbot shieldbot = Shieldbot();
 
-int rightSpeed = 20;  //sets the base speed for the right motor
-int leftSpeed = 20;   //sets the base speed for the left motor                                  
+int rightSpeed = 50;  //sets the base speed for the right motor
+int leftSpeed = 50;   //sets the base speed for the left motor                                  
 int rightRead=0;  //sets default value of right read to 0
 int leftRead=0;   //sets default value of left read to 0
 int senseR; //initialize the right sensor
@@ -16,13 +16,14 @@ void setup() {
   Serial.begin(9600);
   pinMode(rightRead,OUTPUT);
   pinMode(leftRead,OUTPUT);
+  
 }
 
 void loop() 
 {
   // put your main code here, to run repeatedly:
-  leftRead = analogRead(A5); //sets the variable leftRead to be the value from pin A1
-  rightRead =analogRead(A4); //sets the variable rightRead to be the value from pin A0
+  leftRead = analogRead(A4); //sets the variable leftRead to be the value from pin A1
+  rightRead =analogRead(A5); //sets the variable rightRead to be the value from pin A0
   rightWheel(); //calls void rightWheel
   leftWheel();  //calls void leftWheel
   straight();   //calls void straight
@@ -30,15 +31,16 @@ void loop()
   delay(10); //delay of 10 miliseconds
 
 }
-void rightWheel(){
+void rightWheel()
+{
 // used to determine when the sensor is over a white or black segment of the right wheel
   
-  if (rightRead>200) 
+  if (rightRead>90) 
   {
     senseR=1; // black colour detected
     countR++; // increase value of countR by 1
   }
-  if(rightRead<50)
+  else if(rightRead<60)
   {
     senseR=0;// white colour detected
   }
@@ -50,105 +52,61 @@ void rightWheel(){
 void leftWheel(){
 // used to determine when the sensor is over a white or black segment of the left wheel
    
-  if (leftRead>200)
+  if (leftRead>90)
   {
     senseL=1; // black colour detected
     countL++; // increase value of countL by 1
   }
-  if(leftRead<50)
+  else if(leftRead<60)
   {
     senseL=0;// white colour detected
   }
   Serial.print("Left:"); //label for the Left wheel sensor
   Serial.println(senseL); // print value of senseL to serial plotter
+  Serial.print(',');  // allows a 2nd variable and label to be added for printing to serial plotter
 }
 void checkLeft()
   //checks if the left wheel is rotating slower than the right
-{
-  constrain(leftSpeed,10, 127);
-  if (((countL >=3) && (countR >= 3))&& (countL < countR))
-  {
-    leftSpeed++;
-      /*if ((leftSpeed >= 124) && (rightSpeed>2))
-      {
-        rightSpeed--;
-      }
-      else (rightSpeed>2);
-      {
-        leftSpeed++;
-        rightSpeed--;
-      }
-     */}
-     countL = 0;
-     countR = 0;
-  }
-
+{  
+  
+  constrain(leftSpeed, -128, 127);
+  constrain(rightSpeed, -128, 127);
+   if ((countR > 10) && (countL < 10))
+    {     
+      leftSpeed++;
+      rightSpeed--;           
+      countL = 0;
+      countR = 0;
+    }  
+}
 void checkRight()
   //checks if the right wheel is rotating slower than the right
-{
-  constrain(rightSpeed,10, 127);
-   if (((countL >=3) && (countR >= 3))&&(countL > countR))
-    {
-     rightSpeed++;
-      /*if ((rightSpeed >= 124) && (leftSpeed >0))
-        {
-          rightSpeed++;
-        } 
-       else
-        {
-        leftSpeed--;
-        rightSpeed++;
-        }
-      */}
-    countL = 0;
-    countR = 0;
-    }
+{  
+  constrain(leftSpeed, -128, 127);
+  constrain(rightSpeed, -128, 127);
+   if ((countL > 10) && (countR < 10))
+    {     
+      leftSpeed--;
+      rightSpeed++;           
+      countL = 0;
+      countR = 0;
+    }  
+}
 
 void straight()
 {
-checkLeft();
-checkRight();
-}
-/*{
-  if ((countL >=3) && (countR >= 3))
-  {
-    if (countL < countR)
-    {
-      if ((leftSpeed >= 124) && (rightSpeed>2))
-      {
-        rightSpeed--;
-      }
-      else if (rightSpeed>2)
-      {
-        leftSpeed++;
-        rightSpeed--;
-      }
-      
-      countL = 0;
-      countR = 0;
-      
-      //shieldbot.drive(0,rightSpeed);
-    }
-    else if (countL > countR)
-    {
-      if ((rightSpeed >= 124) && (leftSpeed >0))
-      {
-        leftSpeed--;
-      }
-      else
-      {
-        leftSpeed--;
-        rightSpeed++;
-      }
-      countL = 0;
-      countR = 0;
-    // shieldbot.drive(leftSpeed,rightSpeed);
-    }
-    //else if (countR == countL)
-    //{
-      //shieldbot.drive(leftSpeed,rightSpeed);
-      //countL = 0;
-      //countR = 0;
-    //}
-  }
-}*/
+ checkRight();
+ checkLeft();
+ /*
+  Serial.print("countL"); //label for the Left wheel sensor
+  Serial.println(countL); // print value of senseL to serial plotter
+  Serial.print(',');  // allows a 2nd variable and label to be added for printing to serial plotter
+  Serial.print("countR:"); //label for the Left wheel sensor
+  Serial.println(countR); // print value of senseL to serial plotter
+  Serial.print(',');  // allows a 2nd variable and label to be added for printing to serial plotter
+  Serial.print("speedL:"); //label for the Left wheel sensor
+  Serial.println(leftSpeed); // print value of senseL to serial plotter
+  Serial.print(',');  // allows a 2nd variable and label to be added for printing to serial plotter
+  Serial.print("speedR:"); //label for the Left wheel sensor
+  Serial.println(rightSpeed); // print value of senseL to serial plotter
+  */}
