@@ -21,8 +21,8 @@ void setup() {
 void loop() 
 {
   // put your main code here, to run repeatedly:
-  leftRead = analogRead(A1); //sets the variable leftRead to be the value from pin A1
-  rightRead =analogRead(A0); //sets the variable rightRead to be the value from pin A0
+  leftRead = analogRead(A5); //sets the variable leftRead to be the value from pin A1
+  rightRead =analogRead(A4); //sets the variable rightRead to be the value from pin A0
   rightWheel(); //calls void rightWheel
   leftWheel();  //calls void leftWheel
   straight();   //calls void straight
