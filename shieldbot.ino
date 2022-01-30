@@ -22,8 +22,9 @@ void setup() {
 void loop() 
 {
   // put your main code here, to run repeatedly:
-  leftRead = analogRead(A4); //sets the variable leftRead to be the value from pin A1
-  rightRead =analogRead(A5); //sets the variable rightRead to be the value from pin A0
+  leftRead = analogRead(A4); //sets the variable leftRead to be the value from pin A4
+  rightRead =analogRead(A5); //sets the variable rightRead to be the value from pin A5
+                             // pins where changed from A0 and A1 so that the sensors already attached to them can be used later to detect the edge of the course.
   rightWheel(); //calls void rightWheel
   leftWheel();  //calls void leftWheel
   straight();   //calls void straight
@@ -69,34 +70,37 @@ void checkLeft()
   //checks if the left wheel is rotating slower than the right
 {  
   
-  constrain(leftSpeed, -128, 127);
-  constrain(rightSpeed, -128, 127);
+  constrain(leftSpeed, -128, 127); // should theoretically constrain the variables value to be between the 2 values listed
+  constrain(rightSpeed, -128, 127);// should theoretically constrain the variables value to be between the 2 values listed
    if ((countR > 10) && (countL < 10))
     {     
-      leftSpeed++;
-      rightSpeed--;           
-      countL = 0;
-      countR = 0;
+      leftSpeed++; //increase left speed
+      rightSpeed--; //decrease right speed          
+      countL = 0; //reset the counts
+      countR = 0; //reset the counts
     }  
 }
 void checkRight()
   //checks if the right wheel is rotating slower than the right
 {  
-  constrain(leftSpeed, -128, 127);
-  constrain(rightSpeed, -128, 127);
+  constrain(leftSpeed, -128, 127);  // should theoretically constrain the variables value to be between the 2 values listed
+  constrain(rightSpeed, -128, 127); // should theoretically constrain the variables value to be between the 2 values listed
    if ((countL > 10) && (countR < 10))
     {     
-      leftSpeed--;
-      rightSpeed++;           
-      countL = 0;
-      countR = 0;
+      leftSpeed--;  //decrease left speed
+      rightSpeed++; //increase right speed         
+      countL = 0; //reset the counts
+      countR = 0; //reset the counts
     }  
 }
 
 void straight()
 {
+  //calls void checkRight and void checkLeft
  checkRight();
  checkLeft();
+
+ //code use to make sure that the counts where increasing and that the speeds where changing, using the serial monitor
  /*
   Serial.print("countL"); //label for the Left wheel sensor
   Serial.println(countL); // print value of senseL to serial plotter
