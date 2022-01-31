@@ -9,5 +9,3 @@ The reflectance sensor has two parts:
 
 The circuit is set up so that the output voltage is low (close to 0V) when an object is close to the IR LED and reflects the IR light back towards the phototransistor.  The output voltage is high (close to the supply voltage) when no IR light is reflected back towards the phototransistor.
 Connect 5V to the 5V pin, 0V to the GND pin, and the OUT pin can be connected to an A/D converter
-
-Shieldbot has 2 infared reflectance sensors, which will be used to ensure the wheels are rotating at the same speed when going straight.
