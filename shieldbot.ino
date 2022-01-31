@@ -2,7 +2,7 @@
 
 Shieldbot shieldbot = Shieldbot();
 
-int rightSpeed = 50;  //sets the base speed for the right motor
+int rightSpeed = 45;  //sets the base speed for the right motor
 int leftSpeed = 50;   //sets the base speed for the left motor                                  
 int rightRead = 0;  //sets default value of right read to 0
 int leftRead = 0;   //sets default value of left read to 0
@@ -43,16 +43,16 @@ void loop()
   leftRead = analogRead(A4); //sets the variable leftRead to be the value from pin A4
   rightRead =analogRead(A5); //sets the variable rightRead to be the value from pin A5
                              // pins where changed from A0 and A1 so that the sensors already attached to them can be used later to detect the edge of the course.
-  backReadR = analogRead(A0);
-  noseReadR = analogRead(A1);
-  noseRead = analogRead(A2);
-  noseReadL = analogRead(A3);
+  //backReadR = analogRead(A0);
+  //noseReadR = analogRead(A1);
+  //noseRead = analogRead(A2);
+  //noseReadL = analogRead(A3);
   //backReadL = analogRead(D4);
   
   
   rightWheel(); //calls void rightWheel
   leftWheel();  //calls void leftWheel
-  //straight();   //calls void straight
+  straight();   //calls void straight
   checkRight(); //calls void checkRight
   checkLeft();  //calls void checkLeft
   shieldbot.drive(leftSpeed,rightSpeed);  //sets the shieldbot to drive with the left and right motors rotation speed set to the values of variable leftSpeed and rightSpeed respectively
@@ -103,10 +103,10 @@ void checkLeft()
   constrain(rightSpeed, -128, 127);// should theoretically constrain the variables value to be between the 2 values listed
    while ((countR > 10) && (countL > 10) && (countL < countR))  // while countL and countR are greater than 10 and countR is greater than countL, decrease right speed, increase left speed and reset count
     {     
-      leftSpeed = leftSpeed + 5; //increase left speed
-      rightSpeed = rightSpeed - 5; //decrease right speed          
-      //countL = 0; //reset the counts
-      //countR = 0;
+      leftSpeed++; //increase left speed
+      //rightSpeed--; //decrease right speed          
+      countL = 0; //reset the counts
+      countR = 0;
     }  
 }
 void checkRight()
@@ -116,21 +116,21 @@ void checkRight()
   constrain(rightSpeed, -128, 127); // should theoretically constrain the variables value to be between the 2 values listed
    while ((countL > 10) && (countR > 10) && (countL > countR))  // while countL and countR are greater than 10 and countL is greater than countR, decrease left speed, increase right speed and reset count
     {     
-      leftSpeed = leftSpeed - 5;  //decrease left speed
-      rightSpeed = rightSpeed + 5; //increase right speed         
-      //countL = 0; //reset the counts
-      //countR = 0;
+      //leftSpeed--;  //decrease left speed
+      rightSpeed++; //increase right speed         
+      countL = 0; //reset the counts
+      countR = 0;
     }  
 }
 
-//void straight()
-//{
+void straight()
+{
   //calls void checkRight and void checkLeft
  //checkRight();
  //checkLeft();
 
  //code use to make sure that the counts where increasing and that the speeds where changing, using the serial monitor
- /*
+ 
   Serial.print("countL"); //label for the Left wheel sensor
   Serial.println(countL); // print value of senseL to serial plotter
   Serial.print(',');  // allows a 2nd variable and label to be added for printing to serial plotter
@@ -145,5 +145,5 @@ void checkRight()
   Serial.print(',');  // allows a 2nd variable and label to be added for printing to serial plotter
   Serial.print("Revolutions:"); //label for the Left wheel sensor
   Serial.println(rev); // print value of senseL to serial plotter
-  */
-  //}
+  
+  }
