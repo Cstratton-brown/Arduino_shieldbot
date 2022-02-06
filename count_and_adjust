@@ -27,11 +27,6 @@ void loop() {
   // read the input on analog pin 4 from the sensor on the left wheel:
   leftSensorValue = analogRead(A4);
 
-  //leftEdge(); //calls the function leftEdge()
-  //rightEdge();//calls the function rightEdge()
-
-  //checkLeft();
-  //checkRight();
   check();
   leftSpeed = constrain(leftSpeed, 47, 60);  // should theoretically constrain the variables value to be between the 2 values listed
   rightSpeed = constrain(rightSpeed, 40, 53); // should theoretically constrain the variables value to be between the 2 values listed
